@@ -36,6 +36,7 @@ Below is a code chunk({r} indicates the language we are using)
 
 ```{r}
 a <- sqrt(7)
+print(a)
 ```
 
 Alterntively, if quoting results in a narrative, the square root of 7 is `r a`.
