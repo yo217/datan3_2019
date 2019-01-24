@@ -1,7 +1,10 @@
 ---
-titile: "R Markdown Notes"
 author: "Youran Xu"
 date: "Jan 24th 2019"
+output:
+  word_document: default
+  pdf_document: default
+title: "R Markdown Notes"
 ---
 
 ^^ Between "---" is the YAML metadata
