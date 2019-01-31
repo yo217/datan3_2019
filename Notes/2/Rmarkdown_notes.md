@@ -34,7 +34,7 @@ superscript: Cu^2+^ (^)
 
 Below is a code chunk({r} indicates the language we are using) 
 
-```{r}
+```{r, echo=TRUE}
 a <- sqrt(7)
 print(a)
 ```
