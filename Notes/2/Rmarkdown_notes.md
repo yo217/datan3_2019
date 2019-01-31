@@ -3,15 +3,17 @@ title: "R Markdown Notes"
 author: "Youran Xu"
 date: "Jan 24th 2019"
 output:
-  word_document: default
+  html_document: default
   pdf_document: default
+  word_document: default
 ---
 
 ^^ Between "---" is the YAML metadata
 Note: In a R markdown file, not an R script, narratives can be written as if in doc.
 
+# Reading notes
 
-# Formatting
+## Formatting
 
 _Italic_  (_), alternatively, *Italic* (*).
 
@@ -30,16 +32,15 @@ superscript: Cu^2+^ (^)
 > "Blockquotes"
 > ---(>)
 
-# R code chunks
+## R code chunks
 
 Below is a code chunk({r} indicates the language we are using) 
 
-```{r, echo=TRUE}
-a <- sqrt(7)
-print(a)
+```{r}
+sqrt(7)
 ```
 
-Alterntively, if quoting results in a narrative, the square root of 7 is `r a`.
+Alterntively, if quoting results in a narrative, the square root of 7 is `r sqrt(7)`.
 
 - keyboard shortcut: cmd + alt + I
 - `eval=` whether to execute the code chunk
@@ -51,6 +52,9 @@ Alterntively, if quoting results in a narrative, the square root of 7 is `r a`.
 - `setup` to apply this chunk globally 
     - `{r, setup, include = FALSE} knitr::opts_chunk$set(fig.width = 8, collapse = TRUE)`
 
-# Tables
+## Tables
 `knitr::kable()`
 
+# In-class Notes
+
+## 
