@@ -59,12 +59,14 @@ I will release problems for assignments one week before each deadline. Assignmen
 
 The deadlines for statistical assignments are as following.
 
-- Test submission: 29 January, 5pm (not part of your mark)
-- Assignment 1: 5 February, 5pm
-- Assignment 2: 19 February, 5pm
-- Assignment 3: 5 March, 5pm
-- Assignment 4: 12 March, 5pm
-- Assignment 5: 26 March, 5pm
+- Test submission: 29 January, 2pm (not part of your mark)
+- Assignment 1: 5 February, 2pm
+- Assignment 2: 19 February, 2pm
+- Assignment 3: 5 March, 2pm
+- Assignment 4: 12 March, 2pm
+- Assignment 5: 26 March, 2pm
+
+Please see the list of Github repositories with the assignments here: https://github.com/dataanalysis3/datan3_2019/blob/master/assignments.md
 
 The marking criteria for statistical assignments are correctness of your code and of substantive interpretations (where applicable).
 
@@ -72,11 +74,15 @@ The 3-week turnaround rule applies to statistical assignments, but my goal is to
 
 For the final statistical report you will conduct independent analysis of the Understanding Society data and produce a report of 2,000 words describing the results of your analysis.
 
-The deadline for the final statistical report is 9 April, 5pm. I will publish more details describing your task at least one month before the submission deadline (i.e. no later than 9 March). You will receive your marks and feedback by 3 May.
+The deadline for the final statistical report is 9 April, 2pm. I will publish more details describing your task at least one month before the submission deadline (i.e. no later than 9 March). You will receive your marks and feedback by 3 May.
 
 The marking criteria for statistical reports are the following: originality of approach, complexity of analysis, correctness of code, correctness of interpretations, knowledge of background literature, style and accuracy.
 
 Late submissions up to two weeks after the deadline will be capped at 40\%. Submissions that are late for more than two weeks will not be accepted.
+
+#### Homework
+
+I assign homework for each class and you need to complete it before coming to class. Please see details here: https://github.com/dataanalysis3/datan3_2019/blob/master/homework.md
 
 #### Syllabus plan 
 
@@ -101,6 +107,11 @@ The module has a website: <http://abessudnov.net/dataanalysis3/>. Please note th
 The main text for this module is Grolemund and Wickham's *R for Data Science*.
 
 - G.Grolemund & H.Wickham. R for Data Science. Freely available at <http://r4ds.had.co.nz/>.
+
+Solutions for exercises in R for Data Science:
+
+- J.B.Arnold. [R for Data Science: Exercise Solutions](https://jrnold.github.io/r4ds-exercise-solutions/)
+
 
 For details on how to use R Markdown see:
 
