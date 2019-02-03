@@ -1,0 +1,127 @@
+---
+title: "dplyr notes"
+author: "Youran Xu"
+date: "February 1st, 2019"
+
+---
+
+# dplyr
+
+```{r}
+library(nycflights13)
+library(tidyverse)
+```
+
+All dplyr basics work in a similar way:
+1. 1st arguement: a data frame
+2. 2nd: commands in relation to variables
+3. result: a new data frame
+
+## `fliter()`
+
+- (dataset, logical expressions to fliter)
+- dplyr doesn't modify inputs, so always needs assignments
+- `is.na(x)` to determine whether a value is missing
+    - to include NA values: `filter(data, is.na(x) | x > 1)`
+
+## 5.2.4 Execises
+
+### 1. 
+```{r 1. Had an arrival delay of two or more hours}
+flights %>%
+  filter(arr_delay >= 120)
+```
+```{r 2.Flew to Houston (IAH or HOU)}
+flights %>%
+  filter(dest %in% c("IAH", "HOU"))
+```
+```{r 3.Were operated by United, American, or Delta}
+filter(flights, carrier %in% c("AA", "DL", "UA"))
+```
+```{r 4. Departed in summer (July, August, and September)}
+filter(flights, month %in% c(7, 8, 9))
+```
+```{r 5.Arrived more than two hours late, but didn’t leave late}
+flights %>%
+  filter(arr_delay > 120 & dep_delay <= 0)
+```
+```{r 6.Were delayed by at least an hour, but made up over 30 minutes in flight}
+flights %>%
+  filter(dep_delay >= 60 & dep_delay - arr_delay > 30)
+```
+```{r 7.Departed between midnight and 6am (inclusive)}
+flights %>%
+  filter(dep_time <= 600 | dep_time == 2400)
+```
+
+### 2.Another useful dplyr filtering helper is between(). What does it do? Can you use it to simplify the code needed to answer the previous challenges?
+```{r}
+flights %>%
+  filter(between(month, 7, 9))
+```
+### 3. 
+```{r How many flights have a missing dep_time?}
+flights %>%
+  filter(is.na(dep_time)) %>%
+  count()
+```
+```{r What other variables are missing?}
+summary(flights)
+## dep_delay, arr_time, arr_delay, air_time
+## could be cancelled flights, potentially.
+```
+### 4.Why is NA ^ 0 not missing? Why is NA | TRUE not missing? Why is FALSE & NA not missing? Can you figure out the general rule? (NA * 0 is a tricky counterexample!)
+
+```{r}
+NA ^ 0 ## because all x^0=1
+```
+```{r}
+NA | TRUE
+```
+
+```{r}
+NA & FALSE
+```
+```{r}
+NA * 0
+```
+
+## `arrange()`
+
+- changes the order of rows
+-  If you provide more than one column name, each additional column will be used to break ties in the values of preceding columns
+```{r}
+arrange(flights, year, month, day)
+```
+
+- Use desc() to re-order by a column in descending order
+```{r}
+arrange(flights, desc(dep_delay))
+```
+
+## `select()`
+
+- subset with names of variables
+    - `select(data, var1:var3)` subsets the first three variables
+    - `select(data, -(var1:var3))` subsets everything EXCEPT the first three
+    - `starts_with("abc")`
+    - `ends_with("xyz")`
+    - `contains("ijk")`
+    - `num_range("x", 1:3)` matches x1, x2 and x3
+- `select(data, var3, var7, everything())` moves var3 and va7 to the front and keeps everthing else in the data frame
+
+### `rename()`
+`rename(data, var1 = var_1)`
+
+## `mutate()`
+- `mutate(data, var = var1 * var3)`
+- if only want to keep the new variables: `transmute()`
+
+## 5.5.2 Exercises
+
+### 1.
+
+```{r}
+
+```
+
