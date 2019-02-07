@@ -1,0 +1,12 @@
+---
+title: "4- notes"
+author: "Youran"
+date: "06/02/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
