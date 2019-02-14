@@ -59,6 +59,73 @@ joined %>%
 2. Construct a table with the average number of calls per household by region in waves 1 and 8. You'll need to use the following data tables: household data from wave 1 and 8 (a_gor_dv and h_gor_dv identify region) and call records from waves 1 and 8 (callrec, a_ivtnc and h_ivtnc show the total number of calls).
 
 ```{r}
+#### w1 ####
+h1 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w1/a_hhresp.tab")
+cr1 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w1/a_callrec.tab")
+
+h1 <- h1 %>% 
+  select(a_hidp, a_gor_dv)
+
+cr1ed <- cr1 %>% 
+  select(a_hidp, a_ivtnc) %>% 
+  group_by(a_hidp) %>% ## cuz in original dataset each entry is a call, so one household would have multiple entries
+  summarise(
+    n_calls = mean(a_ivtnc)
+  )
+
+cr1ed %>% 
+  count(a_hidp) %>% 
+  filter(n > 1) ## to check whether we've successfully grouped the entries
+
+joined2.1 <- h1 %>% 
+  left_join(cr1ed, by = "a_hidp")
+
+table1 <- joined2.1 %>%   
+  group_by(a_gor_dv) %>% 
+  summarise(
+    meanCalls = mean(n_calls, na.rm = TRUE)
+  ) %>% 
+  filter(a_gor_dv != -9)
+
+table1
+
+#### w8 ####
+h8 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w8/h_hhresp.tab")
+cr8 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w8/h_callrec.tab")
+
+h8 <- h8 %>% 
+  select(h_hidp, h_gor_dv)
+
+cr8ed <- cr8 %>% 
+  select(h_hidp, h_ivtnc) %>% 
+  group_by(h_hidp) %>% ## cuz in original dataset each entry is a call, so one household would have multiple entries
+  summarise(
+    n_calls = mean(h_ivtnc)
+  )
+
+cr8ed %>% 
+  count(h_hidp) %>% 
+  filter(n > 1) ## to check whether we've successfully grouped the entries
+
+joined2.8 <- h8 %>% 
+  left_join(cr8ed, by = "h_hidp")
+
+table2 <- joined2.8 %>%   
+  group_by(h_gor_dv) %>% 
+  summarise(
+    meanCalls = mean(n_calls, na.rm = TRUE)
+  ) %>% 
+  filter(h_gor_dv != -9)
+
+table2
+
+#### join w1 and w8 ####
+
+table1 %>% 
+  full_join(table2, by = c("a_gor_dv" = "h_gor_dv")) %>% 
+  rename(region = a_gor_dv) %>% 
+  rename(wave1 = meanCalls.x) %>% 
+  rename(wave8 = meanCalls.y)
 
 ```
 
