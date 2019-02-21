@@ -13,7 +13,7 @@ knitr::opts_chunk$set(cache = TRUE)
 ```
 Plan for today:
   
-  - Assignment 2: solution
+- Assignment 2: solution
 - Assignment 3
 - Simple data visualisation 
 - Homework for next week
@@ -26,13 +26,96 @@ For all charts use ggplot2. You may need to clean and recode variable before vis
 
 We will start with univariate distributions.
 
+```{r}
+library(tidyverse)
+library(ggplot2)
+
+w8 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w8/h_indresp.tab")
+
+w8 <- w8 %>% 
+  select(pidp, h_sex_dv, h_age_dv, h_racel_dv, h_gor_dv, h_fimnnet_dv)
+```
+
 2. Visualise the distribution of income with a histogram, a density plot and a box plot.
+
+```{r}
+summary(w8$h_fimnnet_dv) # to help decide the limits (xlim or ylim)
+
+w8 %>% 
+  ggplot(aes(x = h_fimnnet_dv)) +
+  geom_histogram(binwidth = 100) +
+  xlab("Net Monthly Personal Income") +
+  xlim(-500, 7000)
+
+w8 %>% 
+  ggplot(aes(x = h_fimnnet_dv)) +
+  geom_density() +
+  xlim(-500, 7000)
+  
+w8 %>% 
+  ggplot(aes(y = h_fimnnet_dv)) +
+  geom_boxplot() +
+  ylim(-500, 5000)
+```
 
 3. Visualise the distribution of sex with a bar graph. 
 
 Bivariate distributions.
 
-4. Create a bart chart showing mean income by region. Then make a grouped bart chart showing mean income by region for men and women separately.
+```{r}
+w8 %>% 
+  mutate(h_sex_dv = ifelse(h_sex_dv == 1, "male", 
+                           ifelse(h_sex_dv == 2, "female", NA))) %>% 
+  filter(!is.na(h_sex_dv)) %>% 
+  ggplot(aes(x = h_sex_dv)) +
+  geom_bar() +
+  xlab("Sex")
+  
+## Alternatively, to show proportions instead of counts
+
+w8 %>% 
+  mutate(h_sex_dv = ifelse(h_sex_dv == 1, "male", 
+                           ifelse(h_sex_dv == 2, "female", NA))) %>% 
+  filter(!is.na(h_sex_dv)) %>% 
+  ggplot(aes(x = h_sex_dv)) +
+  geom_bar(aes(y = (..count..)/ sum(..count..) * 100)) +
+  xlab("Sex") +
+  ylab("Percentage") +
+  scale_y_continuous(breaks = seq(0, 60, 10))
+```
+
+4. Create a bar chart showing mean income by region. Then make a grouped bar chart showing mean income by region for men and women separately.
+
+```{r}
+income <- w8 %>% 
+  mutate(region = recode(h_gor_dv,
+                         `-9` = NA_character_,
+                         `1` = "North East",
+                         `2` = "North West",
+                         `3` = "Yorkshire and the Humber",
+                         `4` = "East Midlands",
+                         `5` = "West Midlands",
+                         `6` = "East of England",
+                         `7` = "London",
+                         `8` = "South East",
+                         `9` = "South West",
+                         `10` = "Wales",
+                         `11` = "Scotland",
+                         `12` = "Northern Ireland")) %>% 
+  filter(!is.na(region)) %>% 
+  group_by(region) %>% 
+  summarise(
+    meanIncome = mean(h_fimnnet_dv, na.rm = TRUE),
+    medianIncome = median(h_fimnnet_dv, na.rm = TRUE)
+  )
+
+income %>% 
+  ggplot(aes(y = medianIncome, x = region)) +
+  geom_bar(stat = "identity")+
+  xlab("Region") +
+  ylab("Mean Net Monthly Personal Income") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
 
 5. Make a dot plot showing the same information as above (without splitting by sex). Sort regions in the descending order by mean income.
 

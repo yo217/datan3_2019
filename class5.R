@@ -74,7 +74,7 @@ joined %>%
 ```{r}
 long <- joined %>% 
   gather(a_sex_dv:c_fimnnet_dv, key = "variables", value = "value") %>% 
-  separate(variables, into = c("wave", "variable"), sep = "_", extra = "merge") %>% 
+  separate(variables, into = c("wave", "variable"), sep = "_", extra = "merge") %>%
   spread(key = variable, value = value)
 long
 
