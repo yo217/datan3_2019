@@ -2,7 +2,7 @@
 title: 'Data Analysis 3: Week 5'
 author: "Alexey Bessudnov"
 date: "14 February 2019"
-output: github_document
+
 ---
   
   ```{r setup, include=FALSE}
